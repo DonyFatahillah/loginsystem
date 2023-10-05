@@ -1,11 +1,11 @@
 import json
 import time
-
+import os
 
 data_pengguna = []
 
 # File name to store user data
-file_name = "user_data.json"
+file_name = "data_nama_user.json"
 
 #i used chatgpt for the data saving method using json because idk how to do it
 #Load user data from a file if it exists
@@ -31,7 +31,7 @@ while True:
 
     pilihan = input("Masukan pilihan opsi (1/2/3/4/5/6) : ")
 
-    if pilihan == "1":
+    while pilihan == "1":
         print("\nMendaftarkan pengguna baru\n")
         nama_pengguna = input("Masukan Username : ")
         email_pengguna = input(r"Masukan Email : ")
@@ -41,6 +41,7 @@ while True:
                 break
         if not isValid:
             print("email tidak valid!")
+            continue
         else:
             password_pengguna = input("Masukan Password : ")
             existing_user = None
@@ -53,13 +54,18 @@ while True:
                     break
             if existing_user:
                 print("Pengguna dengan username atau email yang sama sudah terdaftar.")
+                time.sleep(2)
+                print("Masukan Data yang valid!\n")
+                time.sleep(2)
+                continue
             else:
                 user = {'nama': nama_pengguna, 'email': email_pengguna, 'password': password_pengguna}
                 data_pengguna.append(user)
                 print("Berhasil mendaftarkan pengguna {}!".format(nama_pengguna))
                 print("Selamat Datang!")
+                break
 
-    elif pilihan == "2":
+    while pilihan == "2":
         print("\nLogin ke akun\n")
         nama_pengguna = input("Masukan Username : ")
         password_pengguna = input("Masukan Password : ")
@@ -73,13 +79,14 @@ while True:
 
         if not login_berhasil:
             print("Username atau Password tidak valid! atau User tidak ada di data list")
-            keluar = input("Ulangi dari program ini? y/n : ")
-            if keluar.lower() != "y":
-                break
-            else:
-                continue
+            continue
+        keluar = input("Ulangi dari program ini? y/n : ")
+        if keluar.lower() != "y":
+            break
+        else:
+            continue
 
-    elif pilihan == "3":
+    while pilihan == "3":
         email_pengguna = input("Masukan Email : ")
         password_ditemukan = False
         for user in data_pengguna:
@@ -96,7 +103,9 @@ while True:
             keluar = input("Keluar dari program ini? y/n : ")
             if keluar.lower() == "y":
                 break
-    elif pilihan == "4":
+            else:
+                continue
+    while pilihan == "4":
         print("\nMenghapus akun\n")
         nama_pengguna = input("Masukan Nama : ")
         email_pengguna = input("Masukan Email : ")
@@ -116,10 +125,13 @@ while True:
 
         if not akunDitemukan:
             print("Akun tidak ditemukan")
-            keluar = input("Keluar dari program ini? y/n : ")
-            if keluar.lower() == "y":
-                break
-    elif pilihan == "5":
+            continue
+        keluar = input("Keluar dari program ini? y/n : ")
+        if keluar.lower() == "y":
+            break
+        else:
+            continue
+    if pilihan == "5":
         if len(data_pengguna) == 0:
             print("User tidak ditemukan")
         else:
@@ -127,7 +139,7 @@ while True:
             for idx, user in enumerate(data_pengguna, start=1):
                 print("{}.Nama : {} = aktif".format(idx, user['nama']))
     
-    elif pilihan == "6":
+    while pilihan == "6":
         print("Edit Akun")
         
         nama_pengguna = input("Masukan Username : ")
@@ -168,14 +180,38 @@ while True:
                                 break
                 break
         if not dataValid:
-             print("Data tidak valid")
-        
+            print("Data tidak valid")
+            continue
+    #melihat password
+    while pilihan == "7":
+        print("Daftar user (with password):")
+        for idx, user in enumerate(data_pengguna, start=1):
+            print("{}.Nama : {}, Email : {}, Password : {}".format(idx, user['nama'], user['email'], user['password']))
+        break        
+
     ulangi = input("Ulangi Proses? (y/n) : ")
     if ulangi.lower() != "y":
         # Save user data to a file before exiting
         with open(file_name, "w") as file:
             json.dump(data_pengguna, file)
+        time.sleep(2)
         print("Data saved successfully.")
-        print("sistem akan mati otomatis dalam 5 detik")
-        time.sleep(5)
+        time.sleep(1)
+        print("sistem akan close otomatis dalam 5 detik")
+        time.sleep(1)
+        print("sistem akan close otomatis dalam 4 detik")
+        time.sleep(1)
+        print("sistem akan close otomatis dalam 3 detik")
+        time.sleep(1)
+        print("sistem akan close otomatis dalam 2 detik")
+        time.sleep(1)
+        print("sistem akan close otomatis dalam 1 detik")
+        time.sleep(1)
+        print("sistem akan close otomatis dalam 0 detik")
+        time.sleep(1)
+        os.system('cls' if os.name == 'nt' else 'clear')
         break
+
+
+
+
